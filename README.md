@@ -1,4 +1,4 @@
-# Qwen-MTP
+# Qwen3.6-MTP
 
 MTP speculative decoding tuner for Qwen3.6. Generates vLLM/SGLang configs, finds throughput crossover points, and catches known bugs.
 
