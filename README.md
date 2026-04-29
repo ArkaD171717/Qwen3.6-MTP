@@ -1,4 +1,4 @@
-# qwen-mtp
+# qwen3.6-mtp
 
 MTP speculative decoding tuner for Qwen3.6. Generates vLLM/SGLang configs, finds throughput crossover points, and catches known bugs.
 
@@ -13,13 +13,13 @@ MTP speculative decoding tuner for Qwen3.6. Generates vLLM/SGLang configs, finds
 ## Installation
 
 ```bash
-pip install qwen-mtp
+pip install qwen3.6-mtp
 ```
 
 ## Quick Start
 
 ```python
-from qwen_mtp import recommend, UseCase, Objective
+from qwen3_6_mtp import recommend, UseCase, Objective
 
 rec = recommend(
     use_case=UseCase.SINGLE_USER,
@@ -36,7 +36,7 @@ print(rec.sglang_command)   # Equivalent SGLang command
 ### Crossover Analysis
 
 ```python
-from qwen_mtp import quick_crossover
+from qwen3_6_mtp import quick_crossover
 
 for s in quick_crossover(gpu_id="rtx-3090"):
     print(f"MTP-{s.spec_tokens}: crossover at batch {s.crossover_batch_size}, "
@@ -46,7 +46,7 @@ for s in quick_crossover(gpu_id="rtx-3090"):
 ### Backend Config Generation
 
 ```python
-from qwen_mtp import vllm_mtp_command, sglang_mtp_command
+from qwen3_6_mtp import vllm_mtp_command, sglang_mtp_command
 
 vllm = vllm_mtp_command(model="Qwen/Qwen3.6-27B", num_speculative_tokens=2)
 print(vllm.command)
@@ -58,7 +58,7 @@ print(sglang.command)
 ### Bug Detection
 
 ```python
-from qwen_mtp import check_turboquant_conflict, check_prefix_cache_degradation
+from qwen3_6_mtp import check_turboquant_conflict, check_prefix_cache_degradation
 
 bug = check_turboquant_conflict(enable_turboquant=True, num_spec_tokens=2)
 if bug:

@@ -1,7 +1,7 @@
 import pytest
 
-from qwen_mtp.tuner import recommend
-from qwen_mtp.types import Objective, Quantization, UseCase
+from qwen3_6_mtp.tuner import recommend
+from qwen3_6_mtp.types import Objective, Quantization, UseCase
 
 
 class TestTunerRecommend:

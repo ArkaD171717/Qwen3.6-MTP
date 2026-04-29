@@ -1,6 +1,6 @@
 import pytest
 
-from qwen_mtp.hardware import (
+from qwen3_6_mtp.hardware import (
     GPU_BY_ID,
     GPU_PROFILES,
     MODEL_CONFIGS,

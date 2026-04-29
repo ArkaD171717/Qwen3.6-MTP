@@ -1,5 +1,5 @@
-from qwen_mtp.bench import generate_benchmark_data
-from qwen_mtp.crossover import (
+from qwen3_6_mtp.bench import generate_benchmark_data
+from qwen3_6_mtp.crossover import (
     find_crossover_points,
     quick_crossover,
     summarize_crossovers,

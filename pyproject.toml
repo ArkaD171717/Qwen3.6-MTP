@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "qwen-mtp"
+name = "qwen3.6-mtp"
 version = "0.1.0"
 description = "Hardware-aware MTP speculative decoding auto-tuner for Qwen3.6, with vLLM/SGLang backend normalization and bug detection."
 readme = "README.md"
@@ -41,7 +41,7 @@ classifiers = [
 dev = ["pytest>=7.0", "ruff>=0.1.0"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/qwen_mtp"]
+packages = ["src/qwen3_6_mtp"]
 
 [tool.ruff]
 target-version = "py39"

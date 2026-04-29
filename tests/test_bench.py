@@ -1,4 +1,4 @@
-from qwen_mtp.bench import ACCEPTANCE_RATES, generate_benchmark_data
+from qwen3_6_mtp.bench import ACCEPTANCE_RATES, generate_benchmark_data
 
 
 def test_generates_data():

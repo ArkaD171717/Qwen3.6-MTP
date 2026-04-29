@@ -1,11 +1,11 @@
-from qwen_mtp.bugs import (
+from qwen3_6_mtp.bugs import (
     BUG_REPORTS,
     check_prefix_cache_degradation,
     check_turboquant_conflict,
     get_critical_bugs,
     get_open_bugs,
 )
-from qwen_mtp.types import BugSeverity, BugStatus
+from qwen3_6_mtp.types import BugSeverity, BugStatus
 
 
 def test_bug_reports_non_empty():

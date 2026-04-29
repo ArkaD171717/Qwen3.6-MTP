@@ -1,4 +1,4 @@
-from qwen_mtp.types import (
+from qwen3_6_mtp.types import (
     Backend,
     BugSeverity,
     BugStatus,

@@ -1,6 +1,6 @@
-from qwen_mtp.backends.sglang import sglang_mtp_command
-from qwen_mtp.backends.vllm import vllm_mtp_command
-from qwen_mtp.types import Backend
+from qwen3_6_mtp.backends.sglang import sglang_mtp_command
+from qwen3_6_mtp.backends.vllm import vllm_mtp_command
+from qwen3_6_mtp.types import Backend
 
 
 class TestVllmBackend:
