@@ -32,6 +32,7 @@ def find_crossover_points(
             CrossoverPoint(
                 batch_size=dp.batch_size,
                 spec_tokens=dp.num_spec_tokens,
+                prefix_cache=dp.prefix_cache,
                 is_net_positive=delta > 0,
                 delta_pct=round(delta, 1),
             )
@@ -48,13 +49,23 @@ class CrossoverSummary:
 
 def summarize_crossovers(
     crossover_points: List[CrossoverPoint],
+    prefix_cache: bool = False,
 ) -> List[CrossoverSummary]:
     """For each speculative token count, find the batch size at which
-    MTP becomes net-negative (the crossover point)."""
+    MTP becomes net-negative (the crossover point).
+
+    When prefix_cache is False (default), only considers data without
+    prefix caching. Set to True to see crossover behavior with the
+    L457 cache degradation factored in.
+    """
     summaries: List[CrossoverSummary] = []
     for n in range(1, 6):
         points = sorted(
-            [cp for cp in crossover_points if cp.spec_tokens == n],
+            [
+                cp
+                for cp in crossover_points
+                if cp.spec_tokens == n and cp.prefix_cache == prefix_cache
+            ],
             key=lambda cp: cp.batch_size,
         )
         crossover_bs: Optional[int] = None

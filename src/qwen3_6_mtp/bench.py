@@ -65,6 +65,9 @@ def generate_benchmark_data(
 
 
 def _base_throughput(gpu: GpuProfile) -> float:
+    # Single-request TPS baselines by tier, calibrated against
+    # thc1006/qwen3.6-speculative-decoding-rtx3090 (consumer: ~32 TPS at bs=1)
+    # and vLLM H100 serving benchmarks (datacenter: ~85 TPS at bs=1).
     if gpu.tier.value == "datacenter":
         return 85.0
     if gpu.tier.value == "professional":
@@ -73,6 +76,8 @@ def _base_throughput(gpu: GpuProfile) -> float:
 
 
 def _base_latency(gpu: GpuProfile) -> float:
+    # TPOT baselines in ms by tier, from the same benchmark sources.
+    # Consumer ~58ms matches RTX 3090 TPOT at bs=1 without MTP.
     if gpu.tier.value == "datacenter":
         return 25.0
     if gpu.tier.value == "professional":
@@ -116,7 +121,7 @@ def _compute_point(
             1 + (ar * spec_tokens - draft_overhead) * 0.35
         )
 
-        # L457 bug: prefix cache hit rate drops ~92% → ~71% with MTP (vLLM #38182)
+        # L457 bug: prefix cache hit rate drops ~92% to ~71% with MTP (vLLM #38182)
         if prefix_cache:
             cache_degrade = 0.79 + 0.08 / (1 + batch_size * 0.1)
             tp *= cache_degrade

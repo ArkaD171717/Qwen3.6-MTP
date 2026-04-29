@@ -12,7 +12,7 @@ def vllm_mtp_command(
     enable_prefix_caching: bool = False,
     tensor_parallel: int = 1,
     max_model_len: int = 262144,
-    gpu_memory_utilization: float = 0.92,
+    gpu_memory_utilization: float = 0.9,
     port: int = 8000,
     extra_flags: Optional[List[str]] = None,
 ) -> BackendConfig:

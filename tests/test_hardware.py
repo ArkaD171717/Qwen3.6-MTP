@@ -4,7 +4,6 @@ from qwen3_6_mtp.hardware import (
     GPU_BY_ID,
     GPU_PROFILES,
     MODEL_CONFIGS,
-    SAMPLING_PRESETS,
     get_gpu,
     get_model,
     vram_required,
@@ -66,23 +65,3 @@ def test_vram_required_fp8():
 def test_model_configs_have_both():
     assert "Qwen3.6-27B" in MODEL_CONFIGS
     assert "Qwen3.6-35B-A3B" in MODEL_CONFIGS
-
-
-def test_sampling_presets_exist():
-    assert "27B-thinking-general" in SAMPLING_PRESETS
-    assert "27B-non-thinking" in SAMPLING_PRESETS
-    assert "35B-A3B-thinking-general" in SAMPLING_PRESETS
-
-
-def test_sampling_presets_differ():
-    thinking = SAMPLING_PRESETS["27B-thinking-general"]
-    non_thinking = SAMPLING_PRESETS["27B-non-thinking"]
-    assert thinking.temperature != non_thinking.temperature
-    assert thinking.top_p != non_thinking.top_p
-
-
-def test_27b_vs_35b_presence_penalty():
-    p27 = SAMPLING_PRESETS["27B-thinking-general"]
-    p35 = SAMPLING_PRESETS["35B-A3B-thinking-general"]
-    assert p27.presence_penalty == 0.0
-    assert p35.presence_penalty == 1.5

@@ -50,14 +50,25 @@ def test_summary_max_delta_positive():
         assert s.max_positive_delta_pct >= 0
 
 
-def test_higher_spec_tokens_crossover_earlier():
+def test_mtp1_no_crossover_without_prefix_cache():
     data = generate_benchmark_data()
     points = find_crossover_points(data)
-    summaries = summarize_crossovers(points)
+    summaries = summarize_crossovers(points, prefix_cache=False)
     mtp1 = summaries[0]
-    mtp5 = summaries[4]
-    if mtp1.crossover_batch_size and mtp5.crossover_batch_size:
-        assert mtp5.crossover_batch_size <= mtp1.crossover_batch_size
+    assert mtp1.crossover_batch_size is None
+
+
+def test_higher_spec_tokens_crossover_earlier_with_prefix_cache():
+    data = generate_benchmark_data()
+    points = find_crossover_points(data)
+    summaries = summarize_crossovers(points, prefix_cache=True)
+    with_crossover = [s for s in summaries if s.crossover_batch_size is not None]
+    assert len(with_crossover) >= 2
+    sorted_by_tokens = sorted(with_crossover, key=lambda s: s.spec_tokens)
+    assert (
+        sorted_by_tokens[-1].crossover_batch_size
+        <= sorted_by_tokens[0].crossover_batch_size
+    )
 
 
 def test_quick_crossover():

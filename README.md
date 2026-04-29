@@ -4,7 +4,7 @@ MTP speculative decoding tuner for Qwen3.6. Generates vLLM/SGLang configs, finds
 
 ## What It Does
 
-- **Auto-tuner**: Recommends MTP configuration (or explains why to disable it) based on use case, objective, and GPU
+- **Configuration advisor**: Recommends MTP on/off with parameters via a decision tree over use case, objective, and GPU
 - **Backend configs**: Generates vLLM (`method: mtp`) and SGLang (`NEXTN` algorithm) serve commands
 - **Crossover analysis**: Finds the batch size where MTP flips from net-positive to net-negative throughput
 - **Bug detection**: Detects and blocks known-broken configurations (TurboQuant + MTP, prefix cache degradation)
@@ -19,16 +19,17 @@ pip install qwen3.6-mtp
 ## Quick Start
 
 ```python
-from qwen3_6_mtp import recommend, UseCase, Objective
+from qwen3_6_mtp import recommend, UseCase, Objective, Quantization
 
 rec = recommend(
     use_case=UseCase.SINGLE_USER,
     objective=Objective.MINIMIZE_LATENCY,
     gpu_id="rtx-4090",
+    quantization=Quantization.INT4,
 )
 
 print(rec.enable)           # True
-print(rec.expected_gain)    # ~35-42% latency reduction
+print(rec.expected_gain)    # ~25-35% latency reduction (projected)
 print(rec.vllm_command)     # Full vllm serve command with MTP flags
 print(rec.sglang_command)   # Equivalent SGLang command
 ```
@@ -72,7 +73,7 @@ if bug:
 | MTP decode speedup | +27.5% faster decode TPOT at k=1 on RTX 3090 (with `--no-enable-prefix-caching`) |
 | Prefix cache degradation | L457 bug drops hit rate ~92% to ~71% when MTP is enabled (vLLM #38182, OPEN) |
 | TurboQuant conflict | TQ + MTP = degenerate token loops (vLLM #40831, CLOSED) |
-| Crossover point | MTP becomes net-negative at batch size 4-8 on consumer GPUs |
+| Crossover point | MTP throughput gain shrinks with batch size; net-negative varies by spec tokens and prefix cache (see `quick_crossover()`) |
 | Sampling independence | MTP is algorithmically lossless; does not constrain sampling parameters |
 
 ## Supported Models

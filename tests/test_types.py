@@ -6,7 +6,6 @@ from qwen3_6_mtp.types import (
     MtpRecommendation,
     Objective,
     Quantization,
-    SamplingPreset,
     UseCase,
 )
 
@@ -46,12 +45,6 @@ def test_bug_severity_values():
 def test_bug_status_values():
     assert BugStatus.OPEN.value == "open"
     assert BugStatus.CLOSED.value == "closed"
-
-
-def test_sampling_preset_frozen():
-    preset = SamplingPreset(temperature=1.0, top_p=0.95)
-    assert preset.temperature == 1.0
-    assert preset.top_k == 20  # default
 
 
 def test_recommendation_to_dict():

@@ -1,12 +1,8 @@
-"""Hardware-aware MTP auto-tuner.
+"""MTP configuration advisor.
 
-Answers three questions to produce an MTP recommendation:
-1. Single-user or multi-user?
-2. Minimize latency, maximize throughput, or balanced?
-3. What GPU?
-
-Detects and blocks known-broken configurations (TurboQuant + MTP,
-prefix cache degradation) before they produce silent garbage output.
+Decision tree over three inputs (use case, objective, GPU) to produce
+an MTP recommendation. Detects and blocks known-broken configurations
+(TurboQuant + MTP, prefix cache degradation).
 """
 
 from typing import Optional
@@ -92,7 +88,7 @@ def recommend(
     num_spec, gain = _pick_spec_tokens(use_case, objective, gpu)
     warnings = []
 
-    if gpu.id.startswith("m"):
+    if gpu.id in ("m4-ultra", "m4-max"):
         warnings.extend(
             [
                 "Apple Silicon: use MLX-LM, not vLLM/SGLang.",
@@ -148,13 +144,13 @@ def _should_enable(use_case: UseCase, objective: Objective, gpu: GpuProfile) -> 
 def _pick_spec_tokens(use_case: UseCase, objective: Objective, gpu: GpuProfile):
     if objective == Objective.MINIMIZE_LATENCY:
         if use_case == UseCase.SINGLE_USER:
-            return 3, "~35-42% latency reduction"
-        return 2, "~25-32% latency reduction"
+            return 3, "~25-35% latency reduction (projected from 27.5% at k=1 on RTX 3090)"
+        return 2, "~20-28% latency reduction (projected)"
 
     if gpu.tier.value == "consumer" and use_case == UseCase.MULTI_USER:
-        return 1, "~15-20% latency reduction (may degrade at batch > 8)"
+        return 1, "~10-18% latency reduction (may degrade at batch > 8)"
 
-    return 2, "~20-27% latency reduction, ~5-10% throughput gain at low concurrency"
+    return 2, "~15-22% latency reduction, ~5-10% throughput gain at low concurrency"
 
 
 def _disabled_recommendation(use_case, objective, gpu, prefix_caching):

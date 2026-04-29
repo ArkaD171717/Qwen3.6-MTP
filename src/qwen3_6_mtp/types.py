@@ -34,7 +34,6 @@ class Quantization(str, enum.Enum):
 class BugSeverity(str, enum.Enum):
     CRITICAL = "critical"
     HIGH = "high"
-    MEDIUM = "medium"
 
 
 class BugStatus(str, enum.Enum):
@@ -69,17 +68,6 @@ class ModelConfig:
 
 
 @dataclass(frozen=True)
-class SamplingPreset:
-    """Recommended sampling parameters from the Qwen3.6 model cards."""
-
-    temperature: float
-    top_p: float
-    top_k: int = 20
-    min_p: float = 0.0
-    presence_penalty: float = 0.0
-
-
-@dataclass(frozen=True)
 class BenchmarkPoint:
     batch_size: int
     num_spec_tokens: int
@@ -94,6 +82,7 @@ class BenchmarkPoint:
 class CrossoverPoint:
     batch_size: int
     spec_tokens: int
+    prefix_cache: bool
     is_net_positive: bool
     delta_pct: float
 

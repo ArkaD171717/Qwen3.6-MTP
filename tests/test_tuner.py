@@ -152,7 +152,7 @@ class TestTunerSpecTokenCounts:
         rec = recommend(UseCase.MULTI_USER, Objective.MINIMIZE_LATENCY, "h100-sxm")
         assert rec.num_speculative_tokens == 2
 
-    def test_consumer_multi_latency_gets_1(self):
+    def test_consumer_multi_latency_gets_2(self):
         rec = recommend(
             UseCase.MULTI_USER,
             Objective.MINIMIZE_LATENCY,
@@ -160,7 +160,7 @@ class TestTunerSpecTokenCounts:
             model="Qwen3.6-27B",
             quantization=Quantization.INT4,
         )
-        assert rec.num_speculative_tokens <= 2
+        assert rec.num_speculative_tokens == 2
 
 
 class TestTunerOutput:

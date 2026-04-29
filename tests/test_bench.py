@@ -1,9 +1,20 @@
 from qwen3_6_mtp.bench import ACCEPTANCE_RATES, generate_benchmark_data
+from qwen3_6_mtp.types import BenchmarkPoint
 
 
 def test_generates_data():
     data = generate_benchmark_data()
-    assert len(data) > 0
+    # 7 batch sizes * 6 spec token counts * 2 prefix cache settings = 84
+    assert len(data) == 84
+    for point in data:
+        assert isinstance(point, BenchmarkPoint)
+        assert point.batch_size > 0
+        assert point.num_spec_tokens >= 0
+        assert isinstance(point.prefix_cache, bool)
+        assert point.latency_ms > 0
+        assert point.throughput_tps > 0
+        assert 0.0 <= point.acceptance_rate <= 1.0
+        assert 0 <= point.kv_cache_util_pct <= 100
 
 
 def test_default_sweep_dimensions():

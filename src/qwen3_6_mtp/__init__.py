@@ -1,4 +1,4 @@
-"""Hardware-aware MTP speculative decoding auto-tuner for Qwen3.6:
+"""MTP speculative decoding config advisor for Qwen3.6:
 vLLM/SGLang backend normalization, crossover analysis, and bug detection."""
 
 from .backends import sglang_mtp_command, vllm_mtp_command
@@ -20,7 +20,6 @@ from .hardware import (
     GPU_BY_ID,
     GPU_PROFILES,
     MODEL_CONFIGS,
-    SAMPLING_PRESETS,
     get_gpu,
     get_model,
     vram_required,
@@ -40,7 +39,6 @@ from .types import (
     MtpRecommendation,
     Objective,
     Quantization,
-    SamplingPreset,
     UseCase,
 )
 
@@ -63,7 +61,6 @@ __all__ = [
     "GPU_PROFILES",
     "GPU_BY_ID",
     "MODEL_CONFIGS",
-    "SAMPLING_PRESETS",
     "get_gpu",
     "get_model",
     "vram_required",
@@ -80,6 +77,5 @@ __all__ = [
     "MtpRecommendation",
     "Objective",
     "Quantization",
-    "SamplingPreset",
     "UseCase",
 ]

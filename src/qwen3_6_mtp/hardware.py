@@ -4,7 +4,6 @@ from .types import (
     GpuProfile,
     GpuTier,
     ModelConfig,
-    SamplingPreset,
 )
 
 GPU_PROFILES = [
@@ -95,29 +94,6 @@ MODEL_CONFIGS = {
         vram_fp8_gb=27,
         vram_int4_gb=14,
         mtp_overhead_gb=2.0,
-    ),
-}
-
-# From the official HuggingFace model cards.
-# The 27B and 35B-A3B cards differ on presence_penalty for thinking mode.
-SAMPLING_PRESETS = {
-    "27B-thinking-general": SamplingPreset(
-        temperature=1.0, top_p=0.95, top_k=20, presence_penalty=0.0
-    ),
-    "27B-thinking-coding": SamplingPreset(
-        temperature=0.6, top_p=0.95, top_k=20, presence_penalty=0.0
-    ),
-    "27B-non-thinking": SamplingPreset(
-        temperature=0.7, top_p=0.80, top_k=20, presence_penalty=1.5
-    ),
-    "35B-A3B-thinking-general": SamplingPreset(
-        temperature=1.0, top_p=0.95, top_k=20, presence_penalty=1.5
-    ),
-    "35B-A3B-thinking-coding": SamplingPreset(
-        temperature=0.6, top_p=0.95, top_k=20, presence_penalty=1.5
-    ),
-    "35B-A3B-non-thinking": SamplingPreset(
-        temperature=0.7, top_p=0.80, top_k=20, presence_penalty=1.5
     ),
 }
 

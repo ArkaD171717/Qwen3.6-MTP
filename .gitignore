@@ -6,14 +6,23 @@ CLAUDE.md
 *.zip
 
 __pycache__/
+.ruff_cache/
+SPEC.md
 *.py[cod]
 *.egg-info/
 dist/
 build/
+.pytest_cache/
 .venv/
 venv/
 .idea/
 .vscode/
 *.swp
+.env
+.env.*
+*.pem
+*.key
+credentials.json
 .DS_Store
 Thumbs.db
+Desktop.ini
