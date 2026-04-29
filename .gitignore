@@ -1,4 +1,10 @@
 CLAUDE.md
+.claude/
+.cursorrules
+.cursor/
+*.tar
+*.zip
+
 __pycache__/
 *.py[cod]
 *.egg-info/
