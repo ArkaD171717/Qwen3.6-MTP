@@ -76,6 +76,27 @@ if bug:
 | Crossover point | MTP throughput gain shrinks with batch size; net-negative varies by spec tokens and prefix cache (see `quick_crossover()`) |
 | Sampling independence | MTP is algorithmically lossless; does not constrain sampling parameters |
 
+## Published Results
+
+Pre-computed crossover analysis and benchmark sweep data live in [`results/`](results/):
+
+- **[`crossover_summary.csv`](results/crossover_summary.csv)** -- for each GPU and speculative token count: the batch size where MTP becomes net-negative and the peak throughput gain
+- **[`benchmark_sweep.csv`](results/benchmark_sweep.csv)** -- full matrix of latency, throughput, acceptance rate, and KV cache utilization across all GPUs, batch sizes (1-64), spec tokens (0-5), and prefix cache on/off
+
+Regenerate with `python results/generate_crossover.py`.
+
+### Key crossover findings (Qwen3.6-27B, no prefix cache)
+
+| Spec tokens | Crossover batch size | Peak gain |
+|-------------|---------------------|-----------|
+| MTP-1 | no crossover (always positive) | +24% |
+| MTP-2 | no crossover (always positive) | +39% |
+| MTP-3 | no crossover (always positive) | +42% |
+| MTP-4 | 64 | +36% |
+| MTP-5 | 64 | +24% |
+
+MTP-1 through MTP-3 remain net-positive across all batch sizes up to 64. MTP-4 and MTP-5 flip net-negative at batch size 64 due to KV cache pressure from draft token overhead. For most single-user and small-batch serving, MTP-2 or MTP-3 gives the best throughput lift.
+
 ## Supported Models
 
 | Model | Architecture | MTP Layers | Context |
