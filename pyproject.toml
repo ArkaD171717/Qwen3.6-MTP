@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "qwen3.6-mtp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MTP speculative decoding tuner for Qwen3.6: vLLM/SGLang config generation, crossover analysis, and bug detection."
 readme = "README.md"
 license = "Apache-2.0"
