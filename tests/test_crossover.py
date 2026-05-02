@@ -22,7 +22,7 @@ def test_crossover_delta_range():
     data = generate_benchmark_data()
     points = find_crossover_points(data)
     for p in points:
-        assert -100 < p.delta_pct < 200
+        assert -50 < p.delta_pct < 150
 
 
 def test_small_batch_generally_positive():

@@ -92,7 +92,7 @@ def recommend(
         warnings.extend(
             [
                 "Apple Silicon: use MLX-LM, not vLLM/SGLang.",
-                "Set --ctx-checkpoints 128 for robust multi-session caching "
+                "Set --ctx-checkpoints 128 for multi-session caching "
                 "(default 32 is less reliable).",
             ]
         )

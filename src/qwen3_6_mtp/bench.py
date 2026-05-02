@@ -11,7 +11,7 @@ estimates are derived from published benchmarks:
 """
 
 import math
-from typing import List
+from typing import List, Optional
 
 from .hardware import GPU_BY_ID
 from .types import BenchmarkPoint, GpuProfile
@@ -24,8 +24,8 @@ ACCEPTANCE_RATES = {0: 1.0, 1: 0.82, 2: 0.68, 3: 0.52, 4: 0.38, 5: 0.26}
 def generate_benchmark_data(
     model: str = "Qwen3.6-27B",
     gpu_id: str = "rtx-3090",
-    batch_sizes: List[int] = None,
-    spec_token_counts: List[int] = None,
+    batch_sizes: Optional[List[int]] = None,
+    spec_token_counts: Optional[List[int]] = None,
 ) -> List[BenchmarkPoint]:
     """Generate a synthetic benchmark sweep matrix.
 

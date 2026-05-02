@@ -122,7 +122,7 @@ BUG_REPORTS: List[BugReport] = [
     ),
 ]
 
-BUG_BY_ID = {bug.id: bug for bug in BUG_REPORTS}
+_BUG_BY_ID = {bug.id: bug for bug in BUG_REPORTS}
 
 
 def get_open_bugs() -> List[BugReport]:
@@ -138,7 +138,7 @@ def check_turboquant_conflict(
 ) -> Optional[BugReport]:
     """Return the relevant bug report if TurboQuant + spec decode is attempted."""
     if enable_turboquant and num_spec_tokens > 0:
-        return BUG_BY_ID.get("TQ-40831")
+        return _BUG_BY_ID.get("TQ-40831")
     return None
 
 
@@ -147,5 +147,5 @@ def check_prefix_cache_degradation(
 ) -> Optional[BugReport]:
     """Return the L457 bug report if prefix caching + MTP is enabled."""
     if enable_prefix_cache and num_spec_tokens > 0:
-        return BUG_BY_ID.get("L457")
+        return _BUG_BY_ID.get("L457")
     return None
