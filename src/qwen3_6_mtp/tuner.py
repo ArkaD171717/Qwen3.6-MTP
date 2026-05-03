@@ -144,7 +144,10 @@ def _should_enable(use_case: UseCase, objective: Objective, gpu: GpuProfile) -> 
 def _pick_spec_tokens(use_case: UseCase, objective: Objective, gpu: GpuProfile):
     if objective == Objective.MINIMIZE_LATENCY:
         if use_case == UseCase.SINGLE_USER:
-            return 3, "~25-35% latency reduction (projected from 27.5% at k=1 on RTX 3090)"
+            return (
+                3,
+                "~25-35% latency reduction (projected from 27.5% at k=1 on RTX 3090)",
+            )
         return 2, "~20-28% latency reduction (projected)"
 
     if gpu.tier.value == "consumer" and use_case == UseCase.MULTI_USER:
